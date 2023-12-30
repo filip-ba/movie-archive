@@ -1,0 +1,29 @@
+#ifndef DIALOGWINDOW_H
+#define DIALOGWINDOW_H
+
+#include <QDialog>
+#include <QPair>
+
+namespace Ui {
+class DialogWindow;
+}
+
+class DialogWindow : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit DialogWindow(QWidget *parent = nullptr);
+    ~DialogWindow();
+
+private slots:
+    void on_btnSave_clicked();
+
+signals:
+    void dataSaved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating);
+
+private:
+    Ui::DialogWindow *ui;
+};
+
+#endif // DIALOGWINDOW_H
