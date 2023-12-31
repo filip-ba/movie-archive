@@ -17,10 +17,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btnAddMovie_clicked(); //Disablnul sem diagnostic nevim jeslti jenom tu nebo celkove
+    void on_btnAddMovie_clicked();
 
 public slots:
-    void on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating);
+    void on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating, QString movieImage);
 
 private:
     Ui::MainWindow *ui;

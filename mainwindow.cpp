@@ -3,6 +3,8 @@
 
 #include "dialogwindow.h"
 #include <iostream>
+#include <QFile>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,10 +13,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     dialogWindow = new class DialogWindow(this);
     // Connects
-    connect(dialogWindow , SIGNAL(dataSaved(QString, int, int, QString, QString, int)), this, SLOT(on_data_saved(QString, int, int, QString, QString, int)));
+    connect(dialogWindow , SIGNAL(dataSaved(QString, int, int, QString, QString, int, QString)), this, SLOT(on_data_saved(QString, int, int, QString, QString, int, QString)));
 
     // Create an instance of QTableWidget
-    QTableWidget* tableWidget = ui->tableWidget; // Replace with your actual QTableWidget name
+    QTableWidget* tableWidget = ui->tableWidget;
     // Make the tableWidget not editable
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     // Set section resize mode to stretch
@@ -34,7 +36,7 @@ void MainWindow::on_btnAddMovie_clicked()
     dialogWindow->show();
 }
 
-void MainWindow::on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating)
+void MainWindow::on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating, QString movieImage)
 {
     // Assuming you have a QTableWidget named "tableWidget"
     QTableWidgetItem *itemMovieName = new QTableWidgetItem(movieName);
@@ -52,6 +54,15 @@ void MainWindow::on_data_saved(QString movieName, int movieYear, int movieLength
     ui->tableWidget->setItem(row, 3, itemMovieDirector);
     ui->tableWidget->setItem(row, 4, itemMovieCast);
     ui->tableWidget->setItem(row, 5, itemMovieRating);
+    // Display the cover image
+    // Display scaled and centered image in the new column (assuming column index 6 for the image)
+    QLabel *imageLabel = new QLabel();
+    QPixmap originalPixmap(movieImage);
+    QPixmap scaledPixmap = originalPixmap.scaledToHeight(100, Qt::SmoothTransformation);
+    imageLabel->setPixmap(scaledPixmap);
+    imageLabel->setAlignment(Qt::AlignCenter);
+    ui->tableWidget->setCellWidget(row, 6, imageLabel);
+    ui->tableWidget->setRowHeight(row, scaledPixmap.height());
 }
 
 
