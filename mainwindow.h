@@ -15,6 +15,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void saveDataToFile();
+    //void loadDataFromFile();
 
 private slots:
     void on_btnAddMovie_clicked();

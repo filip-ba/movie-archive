@@ -16,10 +16,11 @@ DialogWindow::DialogWindow(QWidget *parent) :
     QIntValidator* intValidator = new QIntValidator(this);
     intValidator->setBottom(0);  // Set the minimum allowed value
     intValidator->setTop(1000);   // Set the maximum allowed value
-    // Set the validator
+    // Set the validators
     //ui->leMovieYear->setValidator(intValidator);
     //ui->leMovieLength->setValidator(intValidator);
     //ui->leMovieRating->setValidator(intValidator);
+    ui->leMovieImage->setReadOnly(true);
 }
 
 DialogWindow::~DialogWindow()
@@ -29,12 +30,6 @@ DialogWindow::~DialogWindow()
 
 void DialogWindow::on_btnSave_clicked()
 {
-    ui->leMovieName->blockSignals(true);
-    ui->leMovieYear->blockSignals(true);
-    ui->leMovieLength->blockSignals(true);
-    ui->leMovieDirector->blockSignals(true);
-    ui->leMovieCast->blockSignals(true);
-    ui->leMovieRating->blockSignals(true);
     // Read user inputs
     QString movieName = ui->leMovieName->text();
     QString movieYearString = ui->leMovieYear->text();
@@ -47,10 +42,10 @@ void DialogWindow::on_btnSave_clicked()
     int movieRating = movieRatingString.toInt();
     QString movieImage = ui->leMovieImage->text();
     // Check if all fields are filled
-    //if (movieName.isEmpty()||movieYearString.isEmpty()||movieLengthString.isEmpty()||movieDirector.isEmpty()||movieCast.isEmpty()||movieRatingString.isEmpty()||movieImage.isEmpty()) {
-        //QMessageBox::warning(this, "Incomplete Fields", "Please fill in all fields before saving.");
-        //return;
-    //}
+    if (movieName.isEmpty()||movieYearString.isEmpty()||movieLengthString.isEmpty()||movieDirector.isEmpty()||movieCast.isEmpty()||movieRatingString.isEmpty()||movieImage.isEmpty()) {
+        QMessageBox::warning(this, "Incomplete Fields", "Please fill in all fields before saving.");
+        return;
+    }
     // Disconnect the signal-slot connection
     disconnect(ui->btnSave, &QPushButton::clicked, this, &DialogWindow::on_btnSave_clicked);
     // Close the dialog and emit the data

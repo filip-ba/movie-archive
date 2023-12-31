@@ -19,5 +19,9 @@ int main(int argc, char *argv[])
     }
     MainWindow w;
     w.show();
+    // Connect aboutToQuit signal to saveDataToFile slot
+    QObject::connect(&a, &QCoreApplication::aboutToQuit, [&w]() {
+        w.saveDataToFile();
+    });
     return a.exec();
 }
