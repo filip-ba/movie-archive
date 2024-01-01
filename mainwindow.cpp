@@ -14,18 +14,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     dialogWindow = new class DialogWindow(this);
+    // Initialize the status bar
+    statusBar();
     // Load the table data
-    //loadDataFromFile();
+    loadDataFromFile();
     // Connects
     connect(dialogWindow , SIGNAL(dataSaved(QString, int, int, QString, QString, int, QString)), this, SLOT(on_data_saved(QString, int, int, QString, QString, int, QString)));
     // Create an instance of QTableWidget
     QTableWidget* tableWidget = ui->tableWidget;
-    // Make the tableWidget not editable
-    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     // Set section resize mode to stretch
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // Set selection behavior to select entire rows
-    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     // Hide the column storing the image paths
     ui->tableWidget->setColumnHidden(7, true);
 }
@@ -69,6 +67,9 @@ void MainWindow::on_data_saved(QString movieName, int movieYear, int movieLength
     ui->tableWidget->setCellWidget(row, 6, imageLabel);
     // Adjust row height to match the scaled image height
     ui->tableWidget->setRowHeight(row, scaledPixmap.height());
+    // Display a status bar message
+    QString statusMessage = "Movie '" + movieName + "' has been added.";
+    statusBar()->showMessage(statusMessage, 7000); // Show status bar message
 }
 
 
@@ -89,15 +90,6 @@ void MainWindow::saveDataToFile()
     QFile file(filePath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         QTextStream stream(&file);
-        // Write table header
-        QStringList headers;
-        for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
-            // Skip writing the header for the column displaying the image (index 6)
-            if (col != 6) {
-                headers << ui->tableWidget->horizontalHeaderItem(col)->text();
-            }
-        }
-        stream << headers.join("\t") << "\n";
         // Write table data
         for (int row = 0; row < ui->tableWidget->rowCount(); ++row) {
             QStringList rowData;
@@ -135,8 +127,73 @@ void MainWindow::saveDataToFile()
 }
 
 
+void MainWindow::loadDataFromFile()
+{
+    QString movieDataFile = QCoreApplication::applicationDirPath() + "/resources/movie_data/movie_data.txt";
+    QFile file(movieDataFile);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::critical(this, "Error", "Failed to open the data file.");
+        return;
+    }
+    QTextStream stream(&file);
+    // Clear existing data in the table
+    ui->tableWidget->setRowCount(0);
+    // Read and populate the table data
+    while (!stream.atEnd()) {
+        QString dataLine = stream.readLine();
+        QStringList rowData = dataLine.split('\t', Qt::SkipEmptyParts);
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+        // Fills in the first 6 fields
+        for (int col = 0; col < rowData.size()-1; ++col) {
+            QTableWidgetItem *item = new QTableWidgetItem(rowData.value(col));
+            ui->tableWidget->setItem(row, col, item);
+        }
+        // Construct the image path from the image name
+        QString imageName = rowData.value(6);
+        QString imagePath = QCoreApplication::applicationDirPath() + "/resources/movie_covers/" + imageName;
+        // Set the image name as text in the column 7
+        QTableWidgetItem *imageItem = new QTableWidgetItem();
+        imageItem->setText(imageName);
+        ui->tableWidget->setItem(row, 7, imageItem);
+        // Display scaled and centered image in the 6th column
+        QLabel *imageLabel = new QLabel();
+        QPixmap originalPixmap(imagePath);
+        QPixmap scaledPixmap = originalPixmap.scaledToHeight(100, Qt::SmoothTransformation);
+        imageLabel->setPixmap(scaledPixmap);
+        imageLabel->setAlignment(Qt::AlignCenter);
+        ui->tableWidget->removeCellWidget(row, 6); // Clear existing content
+        // Set the widget in the cell
+        ui->tableWidget->setCellWidget(row, 6, imageLabel);
+        // Adjust row height to match the scaled image height
+        ui->tableWidget->setRowHeight(row, scaledPixmap.height());
+    }
+    file.close();
+}
 
 
+void MainWindow::on_btnDeleteMovie_clicked()
+{
+    // Get the selected row
+    int selectedRow = ui->tableWidget->currentRow();
+    if (selectedRow == -1) {
+        QMessageBox::information(this, "No Selection", "Please select a movie to delete.");
+        return;
+    }
+    QString movieName = ui->tableWidget->item(selectedRow, 0)->text();
+    // Confirm deletion with the user
+    QMessageBox::StandardButton confirmation;
+    confirmation = QMessageBox::question(this, "Confirm Deletion", "Are you sure you want to delete the selected movie?",
+                                         QMessageBox::Yes | QMessageBox::No);
+    if (confirmation == QMessageBox::No) {
+        return;
+    }
+    // Remove the selected row
+    ui->tableWidget->removeRow(selectedRow);
+    // Display a status bar message
+    QString statusMessage = "Movie '" + movieName + "' has been deleted.";
+    statusBar()->showMessage(statusMessage, 7000); // Show status bar message
+}
 
 
 

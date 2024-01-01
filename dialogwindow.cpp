@@ -14,8 +14,8 @@ DialogWindow::DialogWindow(QWidget *parent) :
     connect(ui->btnCancel, &QPushButton::clicked, this, &DialogWindow::close);
     // Create an integer validator
     QIntValidator* intValidator = new QIntValidator(this);
-    intValidator->setBottom(0);  // Set the minimum allowed value
-    intValidator->setTop(1000);   // Set the maximum allowed value
+    intValidator->setBottom(0);
+    intValidator->setTop(1000);
     // Set the validators
     //ui->leMovieYear->setValidator(intValidator);
     //ui->leMovieLength->setValidator(intValidator);
@@ -52,7 +52,6 @@ void DialogWindow::on_btnSave_clicked()
     accept();
     emit dataSaved(movieName, movieYear, movieLength, movieDirector, movieCast, movieRating, movieImage);
 }
-
 
 void DialogWindow::on_btnSelectImage_clicked()
 {

@@ -16,13 +16,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void saveDataToFile();
-    //void loadDataFromFile();
+    void loadDataFromFile();
+    void DisplayMovieCover(int row, QString imageName, QString imagePath);
 
 private slots:
     void on_btnAddMovie_clicked();
 
 public slots:
     void on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating, QString movieImage);
+    void on_btnDeleteMovie_clicked();
 
 private:
     Ui::MainWindow *ui;
