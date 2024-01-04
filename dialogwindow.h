@@ -17,11 +17,12 @@ public:
     ~DialogWindow();
 
 private slots:
-    void on_btnSave_clicked();
-    void on_btnSelectImage_clicked();
+    void saveMovie();
+    void selectImage();
 
 signals:
-    void dataSaved(QString movieName, int movieYear, int movieLength, QString movieGenre, QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
+    void dataSaved(QString movieName, int movieYear, int movieLength, QString movieGenre,
+                   QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
 
 private:
     Ui::DialogWindow *ui;

@@ -162,7 +162,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -199,6 +199,24 @@
            </property>
            <item>
             <widget class="QPushButton" name="btnAddMovie">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Add</string>
              </property>
@@ -206,8 +224,51 @@
            </item>
            <item>
             <widget class="QPushButton" name="btnDeleteMovie">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Delete</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnClearSearch">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Clear Search</string>
              </property>
             </widget>
            </item>
@@ -216,10 +277,10 @@
         </layout>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignBottom">
        <widget class="QGroupBox" name="groupBox_2">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>1</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -237,10 +298,10 @@
          <item>
           <layout class="QFormLayout" name="formLayout">
            <property name="horizontalSpacing">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>9</number>
+            <number>15</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -279,10 +340,10 @@
          <item>
           <layout class="QFormLayout" name="formLayout_2">
            <property name="horizontalSpacing">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>9</number>
+            <number>15</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -321,34 +382,27 @@
          <item>
           <layout class="QFormLayout" name="formLayout_4">
            <property name="horizontalSpacing">
-            <number>9</number>
+            <number>6</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>15</number>
            </property>
            <property name="leftMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <item row="0" column="0">
             <widget class="QLabel" name="lengthLabel">
              <property name="text">
               <string>Length</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchLength"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="sortByLabel_2">
-             <property name="text">
-              <string>Sort by</string>
              </property>
             </widget>
            </item>
@@ -371,24 +425,37 @@
              </item>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="leSearchLength"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="sortByLabel_2">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
           <layout class="QFormLayout" name="formLayout_5">
            <property name="horizontalSpacing">
-            <number>9</number>
+            <number>6</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>15</number>
            </property>
            <property name="leftMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <item row="0" column="0">
             <widget class="QLabel" name="yearLabel">
@@ -403,7 +470,7 @@
            <item row="1" column="0">
             <widget class="QLabel" name="sortByLabel">
              <property name="text">
-              <string>Sort by</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -431,24 +498,27 @@
          <item>
           <layout class="QFormLayout" name="formLayout_3">
            <property name="horizontalSpacing">
-            <number>9</number>
+            <number>6</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>15</number>
            </property>
            <property name="leftMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>9</number>
+            <number>6</number>
            </property>
            <item row="1" column="0">
             <widget class="QLabel" name="sortByLabel_3">
              <property name="text">
-              <string>Sort by</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -482,19 +552,6 @@
             <widget class="QLineEdit" name="leSearchRating"/>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnClearSearch">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Clear Search</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>

@@ -19,6 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
     // Load the table data
     loadDataFromFile();
     // Connects
+    connect(dialogWindow, SIGNAL(dataSaved(QString,int,int,QString,QString,QString,QString,QString)), this,
+            SLOT(saveMovie(QString,int,int,QString,QString,QString,QString,QString)));
+    connect(ui->btnAddMovie, &QPushButton::clicked, this, &MainWindow::addMovie);
+    connect(ui->btnDeleteMovie, &QPushButton::clicked, this, &MainWindow::deleteMovie);
+    connect(ui->btnClearSearch, &QPushButton::clicked, this, &MainWindow::clearSearch);
+    // Search connects
     connect(ui->leSearchTitle, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchYear, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchLength, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
@@ -26,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->leSearchDirector, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchCast, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchRating, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
-    connect(ui->btnClearSearch, &QPushButton::clicked, this, &MainWindow::onClearSearchClicked);
     connect(ui->comboBoxYear, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
     connect(ui->comboBoxLength, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
     connect(ui->comboBoxRating, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
@@ -52,13 +57,14 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::btnAddMovie_clicked()
+void MainWindow::addMovie()
 {
     dialogWindow->show();
 }
 
 
-void MainWindow::onDataSaved(QString movieName, int movieYear, int movieLength, QString movieGenre, QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
+void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QString movieGenre,
+                             QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
 {
     int row = ui->tableWidget->rowCount(); // Get the current row count
     ui->tableWidget->insertRow(row); // Insert a new row
@@ -194,7 +200,7 @@ void MainWindow::saveDataToFile()
 }
 
 
-void MainWindow::btnDeleteMovie_clicked()
+void MainWindow::deleteMovie()
 {
     // Get the selected row
     int selectedRow = ui->tableWidget->currentRow();
@@ -340,7 +346,7 @@ void MainWindow::updateTableWithSearch()
 }
 
 
-void MainWindow::onClearSearchClicked()
+void MainWindow::clearSearch()
 {
     // Clear the search fields
     ui->leSearchTitle->clear();

@@ -12,7 +12,10 @@ DialogWindow::DialogWindow(QWidget *parent) :
     ui(new Ui::DialogWindow)
 {
     ui->setupUi(this);
+    // Connects
+    connect(ui->btnSave, &QPushButton::clicked, this, &DialogWindow::saveMovie);
     connect(ui->btnCancel, &QPushButton::clicked, this, &DialogWindow::close);
+    connect(ui->btnSelectImage, &QPushButton::clicked, this, &DialogWindow::selectImage);
     // Create an integer validator
     QIntValidator* intValidator = new QIntValidator(this);
     intValidator->setBottom(0);
@@ -30,7 +33,7 @@ DialogWindow::~DialogWindow()
 }
 
 
-void DialogWindow::on_btnSave_clicked()
+void DialogWindow::saveMovie()
 {
     // Read user inputs
     QString movieName = ui->leMovieName->text();
@@ -84,7 +87,7 @@ void DialogWindow::on_btnSave_clicked()
 }
 
 
-void DialogWindow::on_btnSelectImage_clicked()
+void DialogWindow::selectImage()
 {
     QString imagePath = QFileDialog::getOpenFileName(this, "Choose Cover Image", "", "Images (*.png *.jpg *.jpeg)");
     if (!imagePath.isEmpty()) {

@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     }
     MainWindow w;
 
+    w.setWindowTitle("Movie Archive");
     w.setWindowIcon(QIcon(":/icons/icon.png"));
 
     w.show();
