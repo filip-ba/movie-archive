@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>839</width>
-    <height>602</height>
+    <width>1183</width>
+    <height>716</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,26 +16,29 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <property name="spacing">
-     <number>12</number>
+     <number>18</number>
     </property>
     <property name="leftMargin">
-     <number>12</number>
+     <number>18</number>
     </property>
     <property name="topMargin">
-     <number>12</number>
+     <number>18</number>
     </property>
     <property name="rightMargin">
-     <number>12</number>
+     <number>18</number>
     </property>
     <property name="bottomMargin">
-     <number>12</number>
+     <number>18</number>
     </property>
     <item>
      <widget class="QTableWidget" name="tableWidget">
       <property name="font">
        <font>
-        <pointsize>10</pointsize>
+        <pointsize>9</pointsize>
        </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
       </property>
       <property name="sizeAdjustPolicy">
        <enum>QAbstractScrollArea::AdjustIgnored</enum>
@@ -52,59 +55,108 @@
       <property name="showGrid">
        <bool>true</bool>
       </property>
+      <property name="gridStyle">
+       <enum>Qt::SolidLine</enum>
+      </property>
       <property name="sortingEnabled">
        <bool>true</bool>
       </property>
       <property name="cornerButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>40</number>
+      </attribute>
       <attribute name="horizontalHeaderStretchLastSection">
-       <bool>true</bool>
+       <bool>false</bool>
       </attribute>
       <column>
        <property name="text">
         <string>Title</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Year</string>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>Length</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Director</string>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>Top Cast</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Rating</string>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>Movie Cover</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Image Cover Path</string>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
       </column>
      </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>18</number>
+      </property>
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
@@ -120,29 +172,40 @@
          </size>
         </property>
         <property name="title">
-         <string>Manage Movies</string>
+         <string>Manage Movie List</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
            <item>
             <widget class="QPushButton" name="btnAddMovie">
              <property name="text">
-              <string>Add Movie</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnEditMovie">
-             <property name="text">
-              <string>Edit Movie</string>
+              <string>Add</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="btnDeleteMovie">
              <property name="text">
-              <string>Delete Movie</string>
+              <string>Delete</string>
              </property>
             </widget>
            </item>
@@ -166,11 +229,29 @@
          </size>
         </property>
         <property name="title">
-         <string>Search Catalog</string>
+         <string>Search Attributes</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <layout class="QFormLayout" name="formLayout">
+           <property name="horizontalSpacing">
+            <number>9</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="titleLabel">
              <property name="text">
@@ -179,57 +260,239 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leTitle"/>
+            <widget class="QLineEdit" name="leSearchTitle"/>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="yearLabel">
+            <widget class="QLabel" name="genreLabel">
              <property name="text">
-              <string>Year</string>
+              <string>Genre</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="leYear"/>
+            <widget class="QLineEdit" name="leSearchGenre"/>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="castLabel">
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_2">
+           <property name="horizontalSpacing">
+            <number>9</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="actorLabel">
              <property name="text">
-              <string>Cast</string>
+              <string>Actor</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="leCast"/>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="leSearchCast"/>
            </item>
-           <item row="3" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="directorLabel">
              <property name="text">
               <string>Director</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="leDirector"/>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="leSearchDirector"/>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QPushButton" name="pushButton">
+          <layout class="QFormLayout" name="formLayout_4">
+           <property name="horizontalSpacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="lengthLabel">
              <property name="text">
-              <string>Search</string>
+              <string>Length</string>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_2">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="leSearchLength"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="sortByLabel_2">
              <property name="text">
-              <string>Cancel Search</string>
+              <string>Sort by</string>
              </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="comboBoxLength">
+             <item>
+              <property name="text">
+               <string>Higher than</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Equal to</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Lower than</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_5">
+           <property name="horizontalSpacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="yearLabel">
+             <property name="text">
+              <string>Year</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="leSearchYear"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="sortByLabel">
+             <property name="text">
+              <string>Sort by</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="comboBoxYear">
+             <item>
+              <property name="text">
+               <string>Higher than</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Equal to</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Lower than</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_3">
+           <property name="horizontalSpacing">
+            <number>9</number>
+           </property>
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item row="1" column="0">
+            <widget class="QLabel" name="sortByLabel_3">
+             <property name="text">
+              <string>Sort by</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="comboBoxRating">
+             <item>
+              <property name="text">
+               <string>Higher than</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Equal to</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Lower than</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="ratingLabel">
+             <property name="text">
+              <string>Rating</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="leSearchRating"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnClearSearch">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Clear Search</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -243,7 +506,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>839</width>
+     <width>1183</width>
      <height>22</height>
     </rect>
    </property>

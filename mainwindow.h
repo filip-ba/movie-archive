@@ -17,13 +17,17 @@ public:
     ~MainWindow();
     void saveDataToFile();
     void loadDataFromFile();
-    void DisplayMovieCover(int row, QString imageName, QString imagePath);
+    void addMovie(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, QString movieRating, QString imagePath);
+    void displayMovieCover(int row, QString imageName, QString imagePath);
+    void onClearSearchClicked();
+    void updateTableWithSearch();
+    void displayEntireList();
 
 private slots:
     void on_btnAddMovie_clicked();
 
 public slots:
-    void on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating, QString movieImage);
+    void on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
     void on_btnDeleteMovie_clicked();
 
 private:

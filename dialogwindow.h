@@ -21,7 +21,7 @@ private slots:
     void on_btnSelectImage_clicked();
 
 signals:
-    void dataSaved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, int movieRating, QString movieImage);
+    void dataSaved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
 
 private:
     Ui::DialogWindow *ui;
