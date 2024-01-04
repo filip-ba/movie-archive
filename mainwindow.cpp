@@ -19,12 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
     // Load the table data
     loadDataFromFile();
     // Connects
-    connect(dialogWindow , SIGNAL(dataSaved(QString,int,int,QString,QString,QString,QString)), this, SLOT(on_data_saved(QString,int,int,QString,QString,QString,QString)));
     connect(ui->leSearchTitle, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchYear, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchLength, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
-    connect(ui->leSearchCast, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
+    connect(ui->leSearchGenre, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchDirector, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
+    connect(ui->leSearchCast, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchRating, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->btnClearSearch, &QPushButton::clicked, this, &MainWindow::onClearSearchClicked);
     connect(ui->comboBoxYear, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set section resize mode to stretch
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     // Hide the column storing the image paths
-    ui->tableWidget->setColumnHidden(7, true);
+    ui->tableWidget->setColumnHidden(8, true);
     // Create validators
     QIntValidator* intValidator = new QIntValidator(0, 3000);
     QDoubleValidator* doubleValidator = new QDoubleValidator(0, 10, 1);
@@ -52,19 +52,13 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_btnAddMovie_clicked()
+void MainWindow::btnAddMovie_clicked()
 {
     dialogWindow->show();
 }
 
 
-void MainWindow::on_data_saved(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
-{
-    addMovie(movieName, movieYear, movieLength, movieDirector, movieCast, movieRating, imagePath);
-}
-
-
-void MainWindow::addMovie(QString movieName, int movieYear, int movieLength, QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
+void MainWindow::onDataSaved(QString movieName, int movieYear, int movieLength, QString movieGenre, QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
 {
     int row = ui->tableWidget->rowCount(); // Get the current row count
     ui->tableWidget->insertRow(row); // Insert a new row
@@ -72,9 +66,10 @@ void MainWindow::addMovie(QString movieName, int movieYear, int movieLength, QSt
     ui->tableWidget->setItem(row, 0, new QTableWidgetItem(movieName));
     ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(movieYear)));
     ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(movieLength)));
-    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(movieDirector));
-    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(movieCast));
-    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(movieRating));
+    ui->tableWidget->setItem(row, 3, new QTableWidgetItem(movieGenre));
+    ui->tableWidget->setItem(row, 4, new QTableWidgetItem(movieDirector));
+    ui->tableWidget->setItem(row, 5, new QTableWidgetItem(movieCast));
+    ui->tableWidget->setItem(row, 6, new QTableWidgetItem(movieRating));
     // Extract the image name from the full path
     QFileInfo fileInfo(imagePath);
     QString imageName = fileInfo.fileName();
@@ -91,7 +86,7 @@ void MainWindow::displayMovieCover(int row, QString imageName, QString imagePath
     // Set the image name as text in the column 7
     QTableWidgetItem *imageItem = new QTableWidgetItem();
     imageItem->setText(imageName);
-    ui->tableWidget->setItem(row, 7, imageItem);
+    ui->tableWidget->setItem(row, 8, imageItem);
     // Create a label for the image
     QLabel *imageLabel = new QLabel();
     if (!imagePath.isEmpty() && QFile::exists(imagePath)) {
@@ -100,14 +95,14 @@ void MainWindow::displayMovieCover(int row, QString imageName, QString imagePath
         QPixmap scaledPixmap = originalPixmap.scaledToHeight(100, Qt::SmoothTransformation);
         imageLabel->setPixmap(scaledPixmap);
         imageLabel->setAlignment(Qt::AlignCenter);
-        ui->tableWidget->removeCellWidget(row, 6); // Clear existing content
+        ui->tableWidget->removeCellWidget(row, 7); // Clear existing content
     } else {
         // Display a placeholder label if the image doesn't exist
         imageLabel->setText("No Image");
         imageLabel->setAlignment(Qt::AlignCenter);
     }
     // Set the widget in the cell
-    ui->tableWidget->setCellWidget(row, 6, imageLabel);
+    ui->tableWidget->setCellWidget(row, 7, imageLabel);
     // Explicitly set the row height to 100
     ui->tableWidget->setRowHeight(row, 100);
 }
@@ -136,7 +131,7 @@ void MainWindow::loadDataFromFile()
             ui->tableWidget->setItem(row, col, item);
         }
         // Construct the image path from the image name
-        QString imageName = rowData.value(6);
+        QString imageName = rowData.value(7);
         QString imagePath = QCoreApplication::applicationDirPath() + "/resources/movie_covers/" + imageName;
         // Call a function that displays the movie cover
         displayMovieCover(row, imageName, imagePath);
@@ -168,9 +163,9 @@ void MainWindow::saveDataToFile()
             for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
                 // Skip writing data for the hidden column
                 if (!ui->tableWidget->isColumnHidden(col)) {
-                    // If it's the image cover column(6th column), get the image file name from the hidden 7th column
-                    if (col == 6) {
-                        QTableWidgetItem *item = ui->tableWidget->item(row, 7);
+                    // If it's the image cover column(7th column), get the image file name from the hidden 7th column
+                    if (col == 7) {
+                        QTableWidgetItem *item = ui->tableWidget->item(row, 8);
                         if (item) {
                             rowData << item->text();
                         } else {
@@ -199,7 +194,7 @@ void MainWindow::saveDataToFile()
 }
 
 
-void MainWindow::on_btnDeleteMovie_clicked()
+void MainWindow::btnDeleteMovie_clicked()
 {
     // Get the selected row
     int selectedRow = ui->tableWidget->currentRow();
@@ -223,9 +218,6 @@ void MainWindow::on_btnDeleteMovie_clicked()
 }
 
 
-
-
-
 void MainWindow::updateTableWithSearch()
 {
     // Clear the current selection
@@ -234,6 +226,7 @@ void MainWindow::updateTableWithSearch()
     QString title = ui->leSearchTitle->text().trimmed().toLower();
     QString year = ui->leSearchYear->text().trimmed().toLower();
     QString length = ui->leSearchLength->text().trimmed().toLower();
+    QString genre = ui->leSearchGenre->text().trimmed().toLower();
     QString director = ui->leSearchDirector->text().trimmed().toLower();
     QString cast = ui->leSearchCast->text().trimmed().toLower();
     QString rating = ui->leSearchRating->text().trimmed().toLower();
@@ -245,24 +238,6 @@ void MainWindow::updateTableWithSearch()
             QString cellText = ui->tableWidget->item(row, 0)->text().toLower();
             match = match && cellText.contains(title);
         }
-        // Check length
-        if (!length.isEmpty() && ui->comboBoxLength->currentIndex() != -1) {
-            QString cellText = ui->tableWidget->item(row, 2)->text();
-            int movieLength = cellText.toInt();
-            int searchLength = ui->leSearchLength->text().toInt();
-            // Compare based on the selected option in the comboBoxYear
-            switch (ui->comboBoxLength->currentIndex()) {
-            case 0: // Higher Than
-                match = match && (movieLength >= searchLength);
-                break;
-            case 1: // Equal To
-                match = match && (movieLength == searchLength);
-                break;
-            case 2: // Lower Than
-                match = match && (movieLength <= searchLength);
-                break;
-            }
-        }
         // Check year
         if (!year.isEmpty() && ui->comboBoxYear->currentIndex() != -1) {
             QString cellText = ui->tableWidget->item(row, 1)->text();
@@ -271,40 +246,50 @@ void MainWindow::updateTableWithSearch()
             // Compare based on the selected option in the comboBoxYear
             switch (ui->comboBoxYear->currentIndex()) {
             case 0: // Higher Than
-                match = match && (movieYear >= searchYear);
+                match = match && (movieYear > searchYear);
                 break;
             case 1: // Equal To
                 match = match && (movieYear == searchYear);
                 break;
             case 2: // Lower Than
-                match = match && (movieYear <= searchYear);
+                match = match && (movieYear < searchYear);
                 break;
             }
         }
-        // Check rating
-        if (!rating.isEmpty() && ui->comboBoxRating->currentIndex() != -1) {
-            QString cellText = ui->tableWidget->item(row, 5)->text();
-            cellText.replace(',', '.');
-            double movieRating = cellText.toDouble();
-            QString searchText = ui->leSearchRating->text();
-            searchText.replace(',', '.');
-            double searchRating = searchText.toDouble();
+        // Check length
+        if (!length.isEmpty() && ui->comboBoxLength->currentIndex() != -1) {
+            QString cellText = ui->tableWidget->item(row, 2)->text();
+            int movieLength = cellText.toInt();
+            int searchLength = ui->leSearchLength->text().toInt();
             // Compare based on the selected option in the comboBoxYear
-            switch (ui->comboBoxRating->currentIndex()) {
+            switch (ui->comboBoxLength->currentIndex()) {
             case 0: // Higher Than
-                match = match && (movieRating >= searchRating);
+                match = match && (movieLength > searchLength);
                 break;
             case 1: // Equal To
-                match = match && (movieRating == searchRating);
+                match = match && (movieLength == searchLength);
                 break;
             case 2: // Lower Than
-                match = match && (movieRating <= searchRating);
+                match = match && (movieLength < searchLength);
                 break;
             }
+        }
+        // Check genre
+        if (!genre.isEmpty()) {
+            QString cellText = ui->tableWidget->item(row, 3)->text().toLower();
+            QStringList genres = cellText.split(",", Qt::SkipEmptyParts);
+            bool genresMatch = false;
+            for (const QString& gen : genres) {
+                if (gen.trimmed().contains(genre)) {
+                    genresMatch = true;
+                    break;
+                }
+            }
+            match = match && genresMatch;
         }
         // Check director
         if (!director.isEmpty()) {
-            QString cellText = ui->tableWidget->item(row, 3)->text().toLower();
+            QString cellText = ui->tableWidget->item(row, 4)->text().toLower();
             QStringList directors = cellText.split(",", Qt::SkipEmptyParts);
             bool directorMatch = false;
             for (const QString& dir : directors) {
@@ -317,7 +302,7 @@ void MainWindow::updateTableWithSearch()
         }
         // Check cast
         if (!cast.isEmpty()) {
-            QString cellText = ui->tableWidget->item(row, 4)->text().toLower();
+            QString cellText = ui->tableWidget->item(row, 5)->text().toLower();
             QStringList actors = cellText.split(",", Qt::SkipEmptyParts);
             bool castMatch = false;
             for (const QString& actor : actors) {
@@ -328,11 +313,31 @@ void MainWindow::updateTableWithSearch()
             }
             match = match && castMatch;
         }
+        // Check rating
+        if (!rating.isEmpty() && ui->comboBoxRating->currentIndex() != -1) {
+            QString cellText = ui->tableWidget->item(row, 6)->text();
+            cellText.replace(',', '.');
+            double movieRating = cellText.toDouble();
+            QString searchText = ui->leSearchRating->text();
+            searchText.replace(',', '.');
+            double searchRating = searchText.toDouble();
+            // Compare based on the selected option in the comboBoxYear
+            switch (ui->comboBoxRating->currentIndex()) {
+            case 0: // Higher Than
+                match = match && (movieRating > searchRating);
+                break;
+            case 1: // Equal To
+                match = match && (movieRating == searchRating);
+                break;
+            case 2: // Lower Than
+                match = match && (movieRating < searchRating);
+                break;
+            }
+        }
         // Show or hide the row based on the match
         ui->tableWidget->setRowHidden(row, !match);
     }
 }
-
 
 
 void MainWindow::onClearSearchClicked()
@@ -341,8 +346,9 @@ void MainWindow::onClearSearchClicked()
     ui->leSearchTitle->clear();
     ui->leSearchYear->clear();
     ui->leSearchLength->clear();
-    ui->leSearchCast->clear();
+    ui->leSearchGenre->clear();
     ui->leSearchDirector->clear();
+    ui->leSearchCast->clear();
     ui->leSearchRating->clear();
     // Display the entire list
     displayEntireList();

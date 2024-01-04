@@ -18,8 +18,8 @@ DialogWindow::DialogWindow(QWidget *parent) :
     intValidator->setBottom(0);
     intValidator->setTop(1000);
     // Set the validators
-    //ui->leMovieYear->setValidator(intValidator);
-    //ui->leMovieLength->setValidator(intValidator);
+    ui->leMovieYear->setValidator(intValidator);
+    ui->leMovieLength->setValidator(intValidator);
     ui->leMovieImage->setReadOnly(true);
 }
 
@@ -38,13 +38,14 @@ void DialogWindow::on_btnSave_clicked()
     int movieYear = movieYearString.toInt();
     QString movieLengthString = ui->leMovieLength->text();
     int movieLength = movieLengthString.toInt();
+    QString movieGenre = ui->leMovieGenre->text();
     QString movieDirector = ui->leMovieDirector->text();
     QString movieCast = ui->leMovieCast->text();
     QString movieRating = ui->leMovieRating->text();
     QString movieImage = ui->leMovieImage->text();
     // Check if all fields are filled
     if (movieName.isEmpty() || movieYearString.isEmpty() || movieLengthString.isEmpty() ||
-        movieDirector.isEmpty() || movieCast.isEmpty() || movieRating.isEmpty() ||
+        movieGenre.isEmpty() || movieDirector.isEmpty() || movieCast.isEmpty() || movieRating.isEmpty() ||
         movieImage.isEmpty()) {
         QMessageBox::warning(this, "Incomplete Fields", "Please fill in all fields before saving.");
         return;
@@ -72,12 +73,13 @@ void DialogWindow::on_btnSave_clicked()
     ui->leMovieName->clear();
     ui->leMovieYear->clear();
     ui->leMovieLength->clear();
+    ui->leMovieGenre->clear();
     ui->leMovieDirector->clear();
     ui->leMovieCast->clear();
     ui->leMovieRating->clear();
     ui->leMovieImage->clear();
     // Close the dialog and emit the data
-    emit dataSaved(movieName, movieYear, movieLength, movieDirector, movieCast, movieRating, destinationPath);
+    emit dataSaved(movieName, movieYear, movieLength, movieGenre, movieDirector, movieCast, movieRating, destinationPath);
     accept();
 }
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>326</width>
-    <height>457</height>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,6 +47,20 @@
    </item>
    <item>
     <widget class="QLineEdit" name="leMovieLength"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Length</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leMovieGenre">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_4">

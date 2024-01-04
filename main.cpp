@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
         }
     }
     MainWindow w;
+
+    w.setWindowIcon(QIcon(":/icons/icon.png"));
+
     w.show();
     // Connect aboutToQuit signal to saveDataToFile slot
     QObject::connect(&a, &QCoreApplication::aboutToQuit, [&w]() {
