@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QMessageBox>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -81,6 +82,8 @@ void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QS
     QString imageName = fileInfo.fileName();
     // Call a function that displays the movie cover
     displayMovieCover(row, imageName, imagePath);
+    // Save the movie
+    saveDataToFile();
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been added.";
     statusBar()->showMessage(statusMessage, 7000); // Show status bar message
@@ -159,42 +162,41 @@ void MainWindow::saveDataToFile()
     }
     // Set the file path for saving data
     QString filePath = folderPath + "/movie_data.txt";
-    // Open the file for writing (with Truncate mode)
+    // Open the file for writing (Append mode)
     QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
         QTextStream stream(&file);
-        // Write table data
-        for (int row = 0; row < ui->tableWidget->rowCount(); ++row) {
-            QStringList rowData;
-            for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
-                // Skip writing data for the hidden column
-                if (!ui->tableWidget->isColumnHidden(col)) {
-                    // If it's the image cover column(7th column), get the image file name from the hidden 7th column
-                    if (col == 7) {
-                        QTableWidgetItem *item = ui->tableWidget->item(row, 8);
-                        if (item) {
-                            rowData << item->text();
-                        } else {
-                            rowData << ""; // Handle the case where the item is null
-                        }
+        // Get the row count and write the last inserted row
+        int row = ui->tableWidget->rowCount() - 1;
+        QStringList rowData;
+        for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
+            // Skip writing data for the hidden column
+            if (!ui->tableWidget->isColumnHidden(col)) {
+                // If it's the image cover column(7th column), get the image file name from the hidden 7th column
+                if (col == 7) {
+                    QTableWidgetItem *item = ui->tableWidget->item(row, 8);
+                    if (item) {
+                        rowData << item->text();
                     } else {
-                        QTableWidgetItem *item = ui->tableWidget->item(row, col);
-                        if (item) {
-                            rowData << item->text();
-                        } else {
-                            QWidget *widget = ui->tableWidget->cellWidget(row, col);
-                            if (widget) {
-                                QLabel *label = qobject_cast<QLabel *>(widget);
-                                if (label) {
-                                    rowData << label->text();
-                                }
+                        rowData << ""; // Handle the case where the item is null
+                    }
+                } else {
+                    QTableWidgetItem *item = ui->tableWidget->item(row, col);
+                    if (item) {
+                        rowData << item->text();
+                    } else {
+                        QWidget *widget = ui->tableWidget->cellWidget(row, col);
+                        if (widget) {
+                            QLabel *label = qobject_cast<QLabel *>(widget);
+                            if (label) {
+                                rowData << label->text();
                             }
                         }
                     }
                 }
             }
-            stream << rowData.join("\t") << "\n";
         }
+        stream << rowData.join("\t") << "\n";
         file.close();
     }
 }
@@ -216,7 +218,42 @@ void MainWindow::deleteMovie()
     if (confirmation == QMessageBox::No) {
         return;
     }
-    // Remove the selected row
+    // Get the movie cover file name from the hidden 7th column
+    QTableWidgetItem *item = ui->tableWidget->item(selectedRow, 8);
+    QString imageName;
+    if (item) {
+        imageName = item->text();
+        // Set the path for the movie cover file
+        QString coverPath = QCoreApplication::applicationDirPath() + "/resources/movie_covers/" + imageName;
+        // Remove the movie cover file
+        QFile::remove(coverPath);
+    }
+    // Read existing data from the file
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString filePath = appDir + "/resources/movie_data/movie_data.txt";
+    QFile file(filePath);
+    QStringList lines;
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            lines << line;
+        }
+        file.close();
+    }
+    // Remove the corresponding row from the data
+    if (selectedRow < lines.size()) {
+        lines.removeAt(selectedRow);
+    }
+    // Save the modified data back to the file
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (const QString &line : lines) {
+            out << line << "\n";
+        }
+        file.close();
+    }
+    // Remove the selected row from the table
     ui->tableWidget->removeRow(selectedRow);
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been deleted.";

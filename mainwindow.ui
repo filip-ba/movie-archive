@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1183</width>
+    <width>1186</width>
     <height>716</height>
    </rect>
   </property>
@@ -32,9 +32,15 @@
     </property>
     <item>
      <widget class="QTableWidget" name="tableWidget">
+      <property name="minimumSize">
+       <size>
+        <width>1150</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
-        <pointsize>9</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="frameShape">
@@ -42,6 +48,9 @@
       </property>
       <property name="sizeAdjustPolicy">
        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
       </property>
       <property name="selectionMode">
        <enum>QAbstractItemView::SingleSelection</enum>
@@ -173,6 +182,12 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="title">
          <string>Manage Movies</string>
         </property>
@@ -291,17 +306,25 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="title">
          <string>Search Attributes</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>9</number>
+         </property>
          <item>
           <layout class="QFormLayout" name="formLayout">
            <property name="horizontalSpacing">
             <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -343,7 +366,7 @@
             <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -385,7 +408,7 @@
             <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -443,7 +466,7 @@
             <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -501,7 +524,7 @@
             <number>6</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>16</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
@@ -565,7 +588,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1183</width>
+     <width>1186</width>
      <height>21</height>
     </rect>
    </property>

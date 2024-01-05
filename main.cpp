@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QFile>
+
 
 int main(int argc, char *argv[])
 {
@@ -17,15 +19,12 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
     MainWindow w;
 
     w.setWindowTitle("Movie Archive");
     w.setWindowIcon(QIcon(":/icons/icon.png"));
 
     w.show();
-    // Connect aboutToQuit signal to saveDataToFile slot
-    QObject::connect(&a, &QCoreApplication::aboutToQuit, [&w]() {
-        w.saveDataToFile();
-    });
     return a.exec();
 }
