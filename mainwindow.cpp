@@ -84,6 +84,8 @@ void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QS
     displayMovieCover(row, imageName, imagePath);
     // Save the movie
     saveDataToFile();
+    //
+    updateTableWithSearch();
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been added.";
     statusBar()->showMessage(statusMessage, 7000); // Show status bar message

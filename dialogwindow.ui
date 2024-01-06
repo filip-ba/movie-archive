@@ -315,215 +315,108 @@
           <property name="title">
            <string/>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
            <property name="spacing">
-            <number>9</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
+            <number>12</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0">
-             <property name="spacing">
-              <number>10</number>
+            <widget class="QLabel" name="label_01">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>26</height>
+              </size>
              </property>
-             <property name="topMargin">
-              <number>9</number>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>26</height>
+              </size>
              </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>9</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_01">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>60</width>
-                 <height>26</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>26</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Enjoyment</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSlider" name="slider_enjoyment">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>5</number>
-               </property>
-               <property name="pageStep">
-                <number>1</number>
-               </property>
-               <property name="value">
-                <number>3</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::NoTicks</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="spinbox_enjoyment">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>25</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <bold>false</bold>
-                 <underline>false</underline>
-                 <strikeout>false</strikeout>
-                 <stylestrategy>PreferDefault</stylestrategy>
-                 <kerning>true</kerning>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="frame">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::NoButtons</enum>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>5</number>
-               </property>
-               <property name="value">
-                <number>3</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_8">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
               </font>
              </property>
-             <property name="title">
-              <string/>
+             <property name="text">
+              <string>Enjoyment</string>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <property name="spacing">
-               <number>6</number>
-              </property>
-              <property name="leftMargin">
-               <number>6</number>
-              </property>
-              <property name="topMargin">
-               <number>6</number>
-              </property>
-              <property name="rightMargin">
-               <number>6</number>
-              </property>
-              <property name="bottomMargin">
-               <number>6</number>
-              </property>
-              <item>
-               <widget class="QRadioButton" name="btn_basic">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Basic</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="btn_rewatchable">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Rewatchable</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="btn_life_changing">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Impactful</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="sliderEnjoyment">
+             <property name="font">
+              <font>
+               <pointsize>14</pointsize>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>10</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>5</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::NoTicks</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="leEnjoyment">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>5</string>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
             </widget>
            </item>
           </layout>
@@ -541,19 +434,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
            <property name="spacing">
-            <number>10</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
+            <number>12</number>
            </property>
            <item>
             <widget class="QLabel" name="label_03">
@@ -586,7 +467,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="slider_writing">
+            <widget class="QSlider" name="sliderWriting">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -597,13 +478,13 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>5</number>
+              <number>10</number>
              </property>
              <property name="pageStep">
               <number>1</number>
              </property>
              <property name="value">
-              <number>3</number>
+              <number>5</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -614,49 +495,38 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinbox_writing">
+            <widget class="QLineEdit" name="leWriting">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>25</width>
-               <height>0</height>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
               </size>
              </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
-               <bold>false</bold>
-               <underline>false</underline>
-               <strikeout>false</strikeout>
-               <stylestrategy>PreferDefault</stylestrategy>
-               <kerning>true</kerning>
               </font>
              </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="wrapping">
-              <bool>false</bool>
-             </property>
-             <property name="frame">
-              <bool>true</bool>
+             <property name="text">
+              <string>5</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>3</number>
              </property>
             </widget>
            </item>
@@ -670,19 +540,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <property name="spacing">
-            <number>10</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
+            <number>12</number>
            </property>
            <item>
             <widget class="QLabel" name="label_04">
@@ -715,7 +573,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="slider_acting">
+            <widget class="QSlider" name="sliderActing">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -726,13 +584,13 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>5</number>
+              <number>10</number>
              </property>
              <property name="pageStep">
               <number>1</number>
              </property>
              <property name="value">
-              <number>3</number>
+              <number>5</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -743,46 +601,38 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinbox_acting">
+            <widget class="QLineEdit" name="leActing">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>25</width>
-               <height>0</height>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
               </size>
              </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
-               <bold>false</bold>
-               <underline>false</underline>
-               <strikeout>false</strikeout>
-               <stylestrategy>PreferDefault</stylestrategy>
-               <kerning>true</kerning>
               </font>
              </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="frame">
-              <bool>true</bool>
+             <property name="text">
+              <string>5</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>3</number>
              </property>
             </widget>
            </item>
@@ -796,19 +646,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <property name="spacing">
-            <number>10</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
+            <number>12</number>
            </property>
            <item>
             <widget class="QLabel" name="label_05">
@@ -841,7 +679,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="slider_visuals">
+            <widget class="QSlider" name="sliderVisuals">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -852,13 +690,13 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>5</number>
+              <number>10</number>
              </property>
              <property name="pageStep">
               <number>1</number>
              </property>
              <property name="value">
-              <number>3</number>
+              <number>5</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -869,46 +707,38 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinbox_visuals">
+            <widget class="QLineEdit" name="leVisuals">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>25</width>
-               <height>0</height>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
               </size>
              </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
-               <bold>false</bold>
-               <underline>false</underline>
-               <strikeout>false</strikeout>
-               <stylestrategy>PreferDefault</stylestrategy>
-               <kerning>true</kerning>
               </font>
              </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="frame">
-              <bool>true</bool>
+             <property name="text">
+              <string>5</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>3</number>
              </property>
             </widget>
            </item>
@@ -922,19 +752,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <property name="spacing">
-            <number>10</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
+            <number>12</number>
            </property>
            <item>
             <widget class="QLabel" name="label_06">
@@ -971,7 +789,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="slider_score">
+            <widget class="QSlider" name="sliderScore">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -982,13 +800,13 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>5</number>
+              <number>10</number>
              </property>
              <property name="pageStep">
               <number>1</number>
              </property>
              <property name="value">
-              <number>3</number>
+              <number>5</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -999,46 +817,38 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinbox_score">
+            <widget class="QLineEdit" name="leScore">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>25</width>
-               <height>0</height>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
               </size>
              </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
-               <bold>false</bold>
-               <underline>false</underline>
-               <strikeout>false</strikeout>
-               <stylestrategy>PreferDefault</stylestrategy>
-               <kerning>true</kerning>
               </font>
              </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="frame">
-              <bool>true</bool>
+             <property name="text">
+              <string>5</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
              <property name="readOnly">
               <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>3</number>
              </property>
             </widget>
            </item>
@@ -1104,12 +914,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="leMovieRating">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <bold>false</bold>
-             </font>
+           <widget class="QLabel" name="labelMovieRating">
+            <property name="text">
+             <string>5,0</string>
             </property>
            </widget>
           </item>

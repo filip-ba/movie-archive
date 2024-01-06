@@ -5,6 +5,9 @@
 #include <QIntValidator>
 #include <QFileDialog>
 #include <QFile>
+#include <iostream>
+#include <cmath>
+#include <iomanip>
 
 
 DialogWindow::DialogWindow(QWidget *parent) :
@@ -16,7 +19,20 @@ DialogWindow::DialogWindow(QWidget *parent) :
     // Connects
     connect(ui->btnSave, &QPushButton::clicked, this, &DialogWindow::saveMovie);
     connect(ui->btnCancel, &QPushButton::clicked, this, &DialogWindow::close);
+    connect(ui->btnCancel, &QPushButton::clicked, this, &DialogWindow::setDefaultValues);
     connect(ui->btnSelectImage, &QPushButton::clicked, this, &DialogWindow::selectImage);
+    // Display the slider value in a QLineEdit
+    connect(ui->sliderEnjoyment, &QSlider::valueChanged, this, [this](){ onSliderValueChanged(ui->sliderEnjoyment, ui->leEnjoyment); });
+    connect(ui->sliderWriting, &QSlider::valueChanged, this, [this](){ onSliderValueChanged(ui->sliderWriting, ui->leWriting); });
+    connect(ui->sliderActing, &QSlider::valueChanged, this, [this](){ onSliderValueChanged(ui->sliderActing, ui->leActing); });
+    connect(ui->sliderVisuals, &QSlider::valueChanged, this, [this](){ onSliderValueChanged(ui->sliderVisuals, ui->leVisuals); });
+    connect(ui->sliderScore, &QSlider::valueChanged, this, [this](){ onSliderValueChanged(ui->sliderScore, ui->leScore); });
+    // Rating is calculated every time a slider changes value
+    connect(ui->sliderEnjoyment, &QSlider::valueChanged, this, &DialogWindow::calculateRating);
+    connect(ui->sliderWriting, &QSlider::valueChanged, this, &DialogWindow::calculateRating);
+    connect(ui->sliderActing, &QSlider::valueChanged, this, &DialogWindow::calculateRating);
+    connect(ui->sliderVisuals, &QSlider::valueChanged, this, &DialogWindow::calculateRating);
+    connect(ui->sliderScore, &QSlider::valueChanged, this, &DialogWindow::calculateRating);
     // Create an integer validator
     QIntValidator* intValidator = new QIntValidator(this);
     intValidator->setBottom(0);
@@ -45,7 +61,7 @@ void DialogWindow::saveMovie()
     QString movieGenre = ui->leMovieGenre->text();
     QString movieDirector = ui->leMovieDirector->text();
     QString movieCast = ui->leMovieCast->text();
-    QString movieRating = ui->leMovieRating->text();
+    QString movieRating = ui->labelMovieRating->text();
     QString movieImage = ui->leMovieImage->text();
     // Check if all fields are filled
     if (movieName.isEmpty() || movieYearString.isEmpty() || movieLengthString.isEmpty() ||
@@ -73,15 +89,8 @@ void DialogWindow::saveMovie()
         QMessageBox::critical(this, "Error", "Failed to copy the cover image.");
         return;
     }
-    // Clear the search fields
-    ui->leMovieName->clear();
-    ui->leMovieYear->clear();
-    ui->leMovieLength->clear();
-    ui->leMovieGenre->clear();
-    ui->leMovieDirector->clear();
-    ui->leMovieCast->clear();
-    ui->leMovieRating->clear();
-    ui->leMovieImage->clear();
+    // Set default values after adding the movie
+    setDefaultValues();
     // Close the dialog and emit the data
     emit dataSaved(movieName, movieYear, movieLength, movieGenre, movieDirector, movieCast, movieRating, destinationPath);
     accept();
@@ -101,10 +110,56 @@ void DialogWindow::selectImage()
         if (!destinationDir.exists()) {
             destinationDir.mkpath(destinationFolder);
         }
-        // Get the selected cover image file name
-        QFileInfo fileInfo(imagePath);
-        QString fileName = fileInfo.fileName();
         // Display the path to the image
         ui->leMovieImage->setText(imagePath);
     }
+}
+
+
+void DialogWindow::setDefaultValues() {
+    ui->leMovieName->clear();
+    ui->leMovieYear->clear();
+    ui->leMovieLength->clear();
+    ui->leMovieGenre->clear();
+    ui->leMovieDirector->clear();
+    ui->leMovieCast->clear();
+    ui->labelMovieRating->clear();
+    ui->leMovieImage->clear();
+    ui->sliderEnjoyment->setValue(5);
+    ui->sliderWriting->setValue(5);
+    ui->sliderActing->setValue(5);
+    ui->sliderVisuals->setValue(5);
+    ui->sliderScore->setValue(5);
+}
+
+
+void DialogWindow::calculateRating()
+{
+    int enjoymentVal = ui->sliderEnjoyment->value();
+    int enjoymentWeight = 10;
+    int writingVal = ui->sliderWriting->value();
+    int writingWeight = 4;
+    int actingVal = ui->sliderActing->value();
+    int actingWeight = 3;
+    int visualsVal = ui->sliderVisuals->value();
+    int visualsWeight = 2;
+    int scoreVal = ui->sliderScore->value();
+    int scoreWeight = 1;
+    int sumOfWeights = enjoymentWeight + writingWeight + actingWeight + visualsWeight + scoreWeight;
+    int sumOfValues = (enjoymentVal * enjoymentWeight) + (writingVal * writingWeight) +
+                      (actingVal * actingWeight) + (visualsVal * visualsWeight) + (scoreVal * scoreWeight);
+    double finalScore = (static_cast<double>(sumOfValues) / sumOfWeights);
+    // Round the double to one decimal place
+    double finalScoreRounded = std::round(finalScore * 10.0) / 10.0;
+    std::cout << std::fixed << std::setprecision(1);
+    QString formattedFinalScore = QString::number(finalScoreRounded, 'f', 1);
+    formattedFinalScore.replace(".", ",");
+    ui->labelMovieRating->setText(formattedFinalScore);
+}
+
+
+void DialogWindow::onSliderValueChanged(QSlider* slider, QLineEdit* lineEdit)
+{
+    int value = slider->value();
+    lineEdit->setText(QString::number(value));
 }

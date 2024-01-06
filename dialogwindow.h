@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include <QPair>
+#include <QSlider>
+#include <QLineEdit>
+
 
 namespace Ui {
 class DialogWindow;
@@ -19,6 +22,9 @@ public:
 private slots:
     void saveMovie();
     void selectImage();
+    void onSliderValueChanged(QSlider* slider, QLineEdit* lineEdit);
+    void calculateRating();
+    void setDefaultValues();
 
 signals:
     void dataSaved(QString movieName, int movieYear, int movieLength, QString movieGenre,
