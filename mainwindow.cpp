@@ -84,7 +84,7 @@ void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QS
     displayMovieCover(row, imageName, imagePath);
     // Save the movie
     saveDataToFile();
-    //
+    // Update the search results
     updateTableWithSearch();
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been added.";
@@ -378,6 +378,23 @@ void MainWindow::updateTableWithSearch()
                 match = match && (movieRating < searchRating);
                 break;
             }
+        }
+        // Check if any search criteria are provided
+        bool hasSearchCriteria = !title.isEmpty() || !year.isEmpty() || !length.isEmpty() ||
+                                 !genre.isEmpty() || !director.isEmpty() || !cast.isEmpty() || !rating.isEmpty();
+        QString statusBarText = "Search Criteria: ";
+        // Update status bar text based on the search criteria
+        if (hasSearchCriteria) {
+            if (!title.isEmpty()) statusBarText += "Title: '" + title + "' | ";
+            if (!year.isEmpty()) statusBarText += "Year: '" + year + "' | ";
+            if (!length.isEmpty()) statusBarText += "Length: '" + length + "' | ";
+            if (!genre.isEmpty()) statusBarText += "Genre: '" + genre + "' | ";
+            if (!director.isEmpty()) statusBarText += "Director: '" + director + "' | ";
+            if (!cast.isEmpty()) statusBarText += "Cast: '" + cast + "' | ";
+            if (!rating.isEmpty()) statusBarText += "Rating: '" + rating + "' | ";
+            statusBar()->showMessage(statusBarText);
+        } else {
+            statusBar()->clearMessage();
         }
         // Show or hide the row based on the match
         ui->tableWidget->setRowHidden(row, !match);

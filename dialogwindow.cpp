@@ -123,13 +123,13 @@ void DialogWindow::setDefaultValues() {
     ui->leMovieGenre->clear();
     ui->leMovieDirector->clear();
     ui->leMovieCast->clear();
-    ui->labelMovieRating->clear();
     ui->leMovieImage->clear();
     ui->sliderEnjoyment->setValue(5);
     ui->sliderWriting->setValue(5);
     ui->sliderActing->setValue(5);
     ui->sliderVisuals->setValue(5);
     ui->sliderScore->setValue(5);
+    ui->labelMovieRating->setText("5");
 }
 
 
