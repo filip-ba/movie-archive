@@ -75,6 +75,9 @@
          <bold>false</bold>
         </font>
        </property>
+       <property name="whatsThis">
+        <string>You can fill in basic information about the film here.</string>
+       </property>
        <property name="title">
         <string>Basic Details</string>
        </property>
@@ -102,6 +105,9 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="toolTip">
+           <string>Title of the movie.</string>
+          </property>
           <property name="text">
            <string>Title</string>
           </property>
@@ -124,6 +130,9 @@
             <pointsize>10</pointsize>
             <bold>false</bold>
            </font>
+          </property>
+          <property name="toolTip">
+           <string>The release year of the movie.</string>
           </property>
           <property name="text">
            <string>Year</string>
@@ -151,6 +160,9 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="toolTip">
+           <string>Length of the movie in minutes.</string>
+          </property>
           <property name="text">
            <string>Length</string>
           </property>
@@ -173,6 +185,9 @@
             <pointsize>10</pointsize>
             <bold>false</bold>
            </font>
+          </property>
+          <property name="toolTip">
+           <string>Movie genres seperated by comma.</string>
           </property>
           <property name="text">
            <string>Genre</string>
@@ -200,6 +215,9 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="toolTip">
+           <string>The director of the movie.</string>
+          </property>
           <property name="text">
            <string>Director</string>
           </property>
@@ -223,6 +241,9 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="toolTip">
+           <string>Stars of the movie seperated by comma.</string>
+          </property>
           <property name="text">
            <string>Top Cast</string>
           </property>
@@ -245,6 +266,9 @@
             <pointsize>10</pointsize>
             <bold>false</bold>
            </font>
+          </property>
+          <property name="toolTip">
+           <string>The movie cover(jpg, png).</string>
           </property>
           <property name="text">
            <string>Image</string>
@@ -290,6 +314,9 @@
         <font>
          <pointsize>14</pointsize>
         </font>
+       </property>
+       <property name="whatsThis">
+        <string>You can rate the film based on the following criteria.</string>
        </property>
        <property name="title">
         <string>Rating</string>
@@ -343,6 +370,15 @@
               <font>
                <pointsize>10</pointsize>
               </font>
+             </property>
+             <property name="toolTip">
+              <string>Enjoyment has the biggest impact on the rating.</string>
+             </property>
+             <property name="statusTip">
+              <string/>
+             </property>
+             <property name="whatsThis">
+              <string/>
              </property>
              <property name="text">
               <string>Enjoyment</string>
@@ -461,6 +497,9 @@
                <pointsize>10</pointsize>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Something in between.</string>
+             </property>
              <property name="text">
               <string>Writing</string>
              </property>
@@ -567,6 +606,9 @@
                <pointsize>10</pointsize>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Something in between.</string>
+             </property>
              <property name="text">
               <string>Acting</string>
              </property>
@@ -672,6 +714,9 @@
               <font>
                <pointsize>10</pointsize>
               </font>
+             </property>
+             <property name="toolTip">
+              <string>Something in between.</string>
              </property>
              <property name="text">
               <string>Visuals</string>
@@ -782,6 +827,9 @@
                <underline>false</underline>
                <strikeout>false</strikeout>
               </font>
+             </property>
+             <property name="toolTip">
+              <string>A movie score has a lowest impact on the overall rating.</string>
              </property>
              <property name="text">
               <string>Score</string>
@@ -908,6 +956,12 @@
               <pointsize>14</pointsize>
              </font>
             </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>The overall movie rating calculated using weighted average.</string>
+            </property>
             <property name="text">
              <string>Calculated Rating:</string>
             </property>
@@ -930,18 +984,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="btnSave">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Save</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="btnCancel">
        <property name="font">
         <font>
@@ -950,6 +992,18 @@
        </property>
        <property name="text">
         <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSave">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Save</string>
        </property>
       </widget>
      </item>

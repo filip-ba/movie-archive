@@ -10,11 +10,17 @@
     <height>716</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <property name="spacing">
      <number>18</number>
     </property>
@@ -222,7 +228,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>120</width>
+               <width>150</width>
                <height>0</height>
               </size>
              </property>
@@ -314,10 +320,13 @@
         <property name="title">
          <string>Search Attributes</string>
         </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>9</number>
-         </property>
          <item>
           <layout class="QFormLayout" name="formLayout">
            <property name="horizontalSpacing">
@@ -346,7 +355,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchTitle"/>
+            <widget class="QLineEdit" name="leSearchTitle">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="genreLabel">
@@ -356,7 +372,20 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="leSearchGenre"/>
+            <widget class="QLineEdit" name="leSearchGenre">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -388,7 +417,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchCast"/>
+            <widget class="QLineEdit" name="leSearchCast">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="directorLabel">
@@ -398,7 +434,14 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="leSearchDirector"/>
+            <widget class="QLineEdit" name="leSearchDirector">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -449,7 +492,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchLength"/>
+            <widget class="QLineEdit" name="leSearchLength">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="sortByLabel_2">
@@ -488,7 +538,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchYear"/>
+            <widget class="QLineEdit" name="leSearchYear">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="sortByLabel">
@@ -572,7 +629,14 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="leSearchRating"/>
+            <widget class="QLineEdit" name="leSearchRating">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -589,13 +653,16 @@
      <x>0</x>
      <y>0</y>
      <width>1212</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionAdd_Movie"/>
+    <addaction name="actionBackup_Data"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -604,6 +671,16 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionBackup_Data">
+   <property name="text">
+    <string>Backup Movie Data</string>
+   </property>
+  </action>
+  <action name="actionAdd_Movie">
+   <property name="text">
+    <string>Add Movie</string>
    </property>
   </action>
  </widget>

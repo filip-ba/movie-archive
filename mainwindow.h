@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QDialog>
+#include <QTableWidgetItem>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,23 +17,24 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void saveDataToFile();
-    void loadDataFromFile();
-    void displayMovieCover(int row, QString imageName, QString imagePath);
-    void updateTableWithSearch();
-    void displayEntireList();
 
 private slots:
     void addMovie();
     void deleteMovie();
+    void editMovie(QTableWidgetItem *item);
     void clearSearch();
-
-public slots:
+    void backupDataFile();
     void saveMovie(QString movieName, int movieYear, int movieLength, QString movieGenre,
-                     QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
+                   QString movieDirector, QString movieCast, QString movieRating, QString movieImage);
 
 private:
     Ui::MainWindow *ui;
     QDialog *dialogWindow;
+    void loadDataFromFile();
+    void displayMovieCover(int row, QString imageName, QString imagePath);
+    void displayEntireList();
+    void updateTableWithSearch();
+    void updateDataInFile(int row, int col, const QString &updatedText);
+    void saveDataToFile();
 };
 #endif // MAINWINDOW_H

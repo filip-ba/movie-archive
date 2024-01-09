@@ -3,6 +3,7 @@
 
 #include "dialogwindow.h"
 #include <QFile>
+#include <QFileDialog>
 #include <QLabel>
 #include <QCloseEvent>
 #include <QDir>
@@ -15,6 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     dialogWindow = new class DialogWindow(this);
+    // Create an instance of QTableWidget
+    QTableWidget* tableWidget = ui->tableWidget;
+    // Set section resize mode to stretch
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // Hide the column storing the image paths
+    ui->tableWidget->setColumnHidden(8, true);
     // Initialize the status bar
     statusBar();
     // Load the table data
@@ -24,7 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(saveMovie(QString,int,int,QString,QString,QString,QString,QString)));
     connect(ui->btnAddMovie, &QPushButton::clicked, this, &MainWindow::addMovie);
     connect(ui->btnDeleteMovie, &QPushButton::clicked, this, &MainWindow::deleteMovie);
+    connect(ui->tableWidget, &QTableWidget::itemChanged, this, &MainWindow::editMovie);
     connect(ui->btnClearSearch, &QPushButton::clicked, this, &MainWindow::clearSearch);
+    // File menu connects
+    connect(ui->actionBackup_Data, &QAction::triggered, this, &MainWindow::backupDataFile);
+    connect(ui->actionAdd_Movie, &QAction::triggered, this, &MainWindow::addMovie);
     // Search connects
     connect(ui->leSearchTitle, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
     connect(ui->leSearchYear, &QLineEdit::textChanged, this, &MainWindow::updateTableWithSearch);
@@ -36,12 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBoxYear, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
     connect(ui->comboBoxLength, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
     connect(ui->comboBoxRating, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::updateTableWithSearch);
-    // Create an instance of QTableWidget
-    QTableWidget* tableWidget = ui->tableWidget;
-    // Set section resize mode to stretch
-    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // Hide the column storing the image paths
-    ui->tableWidget->setColumnHidden(8, true);
     // Create validators
     QIntValidator* intValidator = new QIntValidator(0, 3000);
     QDoubleValidator* doubleValidator = new QDoubleValidator(0, 10, 1);
@@ -67,7 +72,8 @@ void MainWindow::addMovie()
 void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QString movieGenre,
                              QString movieDirector, QString movieCast, QString movieRating, QString imagePath)
 {
-    int row = ui->tableWidget->rowCount(); // Get the current row count
+    // Get the current row count
+    int row = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(row); // Insert a new row
     // Set the items in the row
     ui->tableWidget->setItem(row, 0, new QTableWidgetItem(movieName));
@@ -82,31 +88,31 @@ void MainWindow::saveMovie(QString movieName, int movieYear, int movieLength, QS
     QString imageName = fileInfo.fileName();
     // Call a function that displays the movie cover
     displayMovieCover(row, imageName, imagePath);
-    // Save the movie
-    saveDataToFile();
     // Update the search results
     updateTableWithSearch();
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been added.";
-    statusBar()->showMessage(statusMessage, 7000); // Show status bar message
+    statusBar()->showMessage(statusMessage, 5000);
+    // Save the movie
+    saveDataToFile();
 }
 
 
 void MainWindow::displayMovieCover(int row, QString imageName, QString imagePath)
 {
-    // Set the image name as text in the column 7
+    // Set the image name as text in the column 9
     QTableWidgetItem *imageItem = new QTableWidgetItem();
     imageItem->setText(imageName);
     ui->tableWidget->setItem(row, 8, imageItem);
     // Create a label for the image
     QLabel *imageLabel = new QLabel();
     if (!imagePath.isEmpty() && QFile::exists(imagePath)) {
-        // Display scaled and centered image in the 6th column if the image exists
+        // Display scaled and centered image if the image exists
         QPixmap originalPixmap(imagePath);
         QPixmap scaledPixmap = originalPixmap.scaledToHeight(100, Qt::SmoothTransformation);
         imageLabel->setPixmap(scaledPixmap);
         imageLabel->setAlignment(Qt::AlignCenter);
-        ui->tableWidget->removeCellWidget(row, 7); // Clear existing content
+        ui->tableWidget->removeCellWidget(row, 7);
     } else {
         // Display a placeholder label if the image doesn't exist
         imageLabel->setText("No Image");
@@ -114,7 +120,6 @@ void MainWindow::displayMovieCover(int row, QString imageName, QString imagePath
     }
     // Set the widget in the cell
     ui->tableWidget->setCellWidget(row, 7, imageLabel);
-    // Explicitly set the row height to 100
     ui->tableWidget->setRowHeight(row, 100);
 }
 
@@ -164,41 +169,42 @@ void MainWindow::saveDataToFile()
     }
     // Set the file path for saving data
     QString filePath = folderPath + "/movie_data.txt";
-    // Open the file for writing (Append mode)
+    // Open the file for writing
     QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         QTextStream stream(&file);
-        // Get the row count and write the last inserted row
-        int row = ui->tableWidget->rowCount() - 1;
-        QStringList rowData;
-        for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
-            // Skip writing data for the hidden column
-            if (!ui->tableWidget->isColumnHidden(col)) {
-                // If it's the image cover column(7th column), get the image file name from the hidden 7th column
-                if (col == 7) {
-                    QTableWidgetItem *item = ui->tableWidget->item(row, 8);
-                    if (item) {
-                        rowData << item->text();
+        // Write table data
+        for (int row = 0; row < ui->tableWidget->rowCount(); ++row) {
+            QStringList rowData;
+            for (int col = 0; col < ui->tableWidget->columnCount(); ++col) {
+                // Skip writing data for the hidden column
+                if (!ui->tableWidget->isColumnHidden(col)) {
+                    // If it's the image cover column, get the image file name from the hidden column
+                    if (col == 7) {
+                        QTableWidgetItem *item = ui->tableWidget->item(row, 8);
+                        if (item) {
+                            rowData << item->text();
+                        } else {
+                            rowData << "No Data";
+                        }
                     } else {
-                        rowData << ""; // Handle the case where the item is null
-                    }
-                } else {
-                    QTableWidgetItem *item = ui->tableWidget->item(row, col);
-                    if (item) {
-                        rowData << item->text();
-                    } else {
-                        QWidget *widget = ui->tableWidget->cellWidget(row, col);
-                        if (widget) {
-                            QLabel *label = qobject_cast<QLabel *>(widget);
-                            if (label) {
-                                rowData << label->text();
+                        QTableWidgetItem *item = ui->tableWidget->item(row, col);
+                        if (item) {
+                            rowData << item->text();
+                        } else {
+                            QWidget *widget = ui->tableWidget->cellWidget(row, col);
+                            if (widget) {
+                                QLabel *label = qobject_cast<QLabel *>(widget);
+                                if (label) {
+                                    rowData << label->text();
+                                }
                             }
                         }
                     }
                 }
             }
+            stream << rowData.join("\t") << "\n";
         }
-        stream << rowData.join("\t") << "\n";
         file.close();
     }
 }
@@ -220,7 +226,7 @@ void MainWindow::deleteMovie()
     if (confirmation == QMessageBox::No) {
         return;
     }
-    // Get the movie cover file name from the hidden 7th column
+    // Get the movie cover file name from the hidden column
     QTableWidgetItem *item = ui->tableWidget->item(selectedRow, 8);
     QString imageName;
     if (item) {
@@ -259,7 +265,7 @@ void MainWindow::deleteMovie()
     ui->tableWidget->removeRow(selectedRow);
     // Display a status bar message
     QString statusMessage = "Movie '" + movieName + "' has been deleted.";
-    statusBar()->showMessage(statusMessage, 7000); // Show status bar message
+    statusBar()->showMessage(statusMessage, 5000);
 }
 
 
@@ -306,15 +312,14 @@ void MainWindow::updateTableWithSearch()
             QString cellText = ui->tableWidget->item(row, 2)->text();
             int movieLength = cellText.toInt();
             int searchLength = ui->leSearchLength->text().toInt();
-            // Compare based on the selected option in the comboBoxYear
             switch (ui->comboBoxLength->currentIndex()) {
-            case 0: // Higher Than
+            case 0:
                 match = match && (movieLength > searchLength);
                 break;
-            case 1: // Equal To
+            case 1:
                 match = match && (movieLength == searchLength);
                 break;
-            case 2: // Lower Than
+            case 2:
                 match = match && (movieLength < searchLength);
                 break;
             }
@@ -368,13 +373,13 @@ void MainWindow::updateTableWithSearch()
             double searchRating = searchText.toDouble();
             // Compare based on the selected option in the comboBoxYear
             switch (ui->comboBoxRating->currentIndex()) {
-            case 0: // Higher Than
+            case 0:
                 match = match && (movieRating > searchRating);
                 break;
-            case 1: // Equal To
+            case 1:
                 match = match && (movieRating == searchRating);
                 break;
-            case 2: // Lower Than
+            case 2:
                 match = match && (movieRating < searchRating);
                 break;
             }
@@ -425,4 +430,77 @@ void MainWindow::displayEntireList()
         ui->tableWidget->setRowHidden(row, false);
     }
 }
+
+
+void MainWindow::editMovie(QTableWidgetItem *item)
+{
+    if (!item) {
+        return;
+    }
+    // Get the row and column of the changed item
+    int row = item->row();
+    int col = item->column();
+    // Get the updated text
+    QString updatedText = item->text();
+    // Update the data in the movie_data.txt file
+    updateDataInFile(row, col, updatedText);
+}
+
+
+void MainWindow::updateDataInFile(int row, int col, const QString &updatedText)
+{
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString filePath = appDir + "/resources/movie_data/movie_data.txt";
+    QFile file(filePath);
+    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QTextStream stream(&file);
+        // Read and update data in the file
+        QStringList updatedData;
+        int currentRow = 0;
+        while (!stream.atEnd()) {
+            QString dataLine = stream.readLine();
+            QStringList rowData = dataLine.split('\t', Qt::SkipEmptyParts);
+            // Update the changed item in the corresponding row and column
+            if (currentRow == row && col < rowData.size()) {
+                rowData[col] = updatedText.isEmpty() ? "No Data" : updatedText;
+            }
+            updatedData << rowData.join("\t");
+            ++currentRow;
+        }
+        // Clear the existing data in the file
+        file.resize(0);
+        // Write the updated data to the file
+        stream << updatedData.join("\n");
+        file.close();
+    }
+    QString statusMessage = "The record has been edited.";
+    statusBar()->showMessage(statusMessage, 5000);
+}
+
+
+void MainWindow::backupDataFile()
+{
+    QString sourceFilePath = QCoreApplication::applicationDirPath() + "/resources/movie_data/movie_data.txt";
+    QString destinationFilePath = QFileDialog::getSaveFileName(this, "Choose Backup Destination", "", "Text Files (*.txt)");
+    if (destinationFilePath.isEmpty()) {
+        return;
+    }
+    // Copy the contents of the source file to the destination file
+    QFile sourceFile(sourceFilePath);
+    QFile destinationFile(destinationFilePath);
+    if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text) && destinationFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream in(&sourceFile);
+        QTextStream out(&destinationFile);
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            out << line << "\n";
+        }
+        sourceFile.close();
+        destinationFile.close();
+        statusBar()->showMessage("Backup completed.", 5000);
+    } else {
+        statusBar()->showMessage("Error: Backup failed.", 5000);
+    }
+}
+
 

@@ -1,5 +1,6 @@
 #include "dialogwindow.h"
 #include "ui_dialogwindow.h"
+
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QIntValidator>
@@ -89,7 +90,7 @@ void DialogWindow::saveMovie()
         QMessageBox::critical(this, "Error", "Failed to copy the cover image.");
         return;
     }
-    // Set default values after adding the movie
+    // Clear the input fields after adding the movie
     setDefaultValues();
     // Close the dialog and emit the data
     emit dataSaved(movieName, movieYear, movieLength, movieGenre, movieDirector, movieCast, movieRating, destinationPath);
@@ -101,9 +102,7 @@ void DialogWindow::selectImage()
 {
     QString imagePath = QFileDialog::getOpenFileName(this, "Choose Cover Image", "", "Images (*.png *.jpg *.jpeg)");
     if (!imagePath.isEmpty()) {
-        // Get the application's directory
         QString appDir = QCoreApplication::applicationDirPath();
-        // Set the destination folder path
         QString destinationFolder = appDir + "/resources/movie_covers/";
         // Check if the destination folder exists, create if not
         QDir destinationDir(destinationFolder);
@@ -129,26 +128,26 @@ void DialogWindow::setDefaultValues() {
     ui->sliderActing->setValue(5);
     ui->sliderVisuals->setValue(5);
     ui->sliderScore->setValue(5);
-    ui->labelMovieRating->setText("5");
+    ui->labelMovieRating->setText("5,0");
 }
 
 
 void DialogWindow::calculateRating()
 {
     int enjoymentVal = ui->sliderEnjoyment->value();
-    int enjoymentWeight = 10;
+    double enjoymentWeight = 1;
     int writingVal = ui->sliderWriting->value();
-    int writingWeight = 4;
+    double writingWeight = 0.5;
     int actingVal = ui->sliderActing->value();
-    int actingWeight = 3;
+    double actingWeight = 0.3;
     int visualsVal = ui->sliderVisuals->value();
-    int visualsWeight = 2;
+    double visualsWeight = 0.2;
     int scoreVal = ui->sliderScore->value();
-    int scoreWeight = 1;
-    int sumOfWeights = enjoymentWeight + writingWeight + actingWeight + visualsWeight + scoreWeight;
-    int sumOfValues = (enjoymentVal * enjoymentWeight) + (writingVal * writingWeight) +
+    double scoreWeight = 0.1;
+    double sumOfValues = (enjoymentVal * enjoymentWeight) + (writingVal * writingWeight) +
                       (actingVal * actingWeight) + (visualsVal * visualsWeight) + (scoreVal * scoreWeight);
-    double finalScore = (static_cast<double>(sumOfValues) / sumOfWeights);
+
+    double finalScore = (sumOfValues / 2.1);
     // Round the double to one decimal place
     double finalScoreRounded = std::round(finalScore * 10.0) / 10.0;
     std::cout << std::fixed << std::setprecision(1);
