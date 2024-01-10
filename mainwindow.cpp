@@ -128,6 +128,10 @@ void MainWindow::loadDataFromFile()
 {
     QString movieDataFile = QCoreApplication::applicationDirPath() + "/resources/movie_data/movie_data.txt";
     QFile file(movieDataFile);
+    // Create the text file and necessary folders if they doesn't exists
+    if (!file.exists()) {
+        createEmptyDataFile(movieDataFile);
+    }
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Failed to open the data file.");
         return;
@@ -153,6 +157,18 @@ void MainWindow::loadDataFromFile()
         displayMovieCover(row, imageName, imagePath);
     }
     file.close();
+}
+
+
+void MainWindow::createEmptyDataFile(const QString& filePath)
+{
+    QFileInfo fileInfo(filePath);
+    QDir().mkpath(fileInfo.absolutePath());
+    QFile file(filePath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        file.close();
+    }
 }
 
 

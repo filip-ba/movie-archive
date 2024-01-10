@@ -36,5 +36,6 @@ private:
     void updateTableWithSearch();
     void updateDataInFile(int row, int col, const QString &updatedText);
     void saveDataToFile();
+    void createEmptyDataFile(const QString& filePath);
 };
 #endif // MAINWINDOW_H

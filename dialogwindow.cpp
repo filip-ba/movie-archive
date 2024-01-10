@@ -16,7 +16,6 @@ DialogWindow::DialogWindow(QWidget *parent) :
     ui(new Ui::DialogWindow)
 {
     ui->setupUi(this);
-    setFixedSize(650, 650);
     // Connects
     connect(ui->btnSave, &QPushButton::clicked, this, &DialogWindow::saveMovie);
     connect(ui->btnCancel, &QPushButton::clicked, this, &DialogWindow::close);
